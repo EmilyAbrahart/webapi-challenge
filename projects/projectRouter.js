@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Project = require('../data/helpers/projectModel');
+const Action = require('../data/helpers/actionModel');
 
 router.post('/', validateProject, (req, res) => {
 	const { name, description } = req.body;
@@ -83,6 +84,19 @@ router.put('/:id', validateProjectId, validateProject, async (req, res) => {
 			res.status(500).json({ message: `Unable to update project ${id}` });
 		});
 });
+
+router.post('/:id/actions', validateProjectId, validateAction, async (req, res) => {
+const id = req.params.id;
+const {description, notes} = req.body;
+
+Action.insert({description: description, notes: notes, project_id: id})
+.then(data => {
+  res.status(201).json(data)
+})
+.catch(error => {
+  res.status(500).json({message: `Unable to add action to project ${id}.`})
+})
+})
 
 // Project Middleware
 async function validateProjectId(req, res, next) {

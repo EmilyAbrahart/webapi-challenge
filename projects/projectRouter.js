@@ -26,11 +26,25 @@ router.get('/', (req, res) => {
 		});
 });
 
+router.get('/:id', validateProjectId, (req, res) => {
+	const id = req.params.id;
+
+	Project.get(id)
+		.then(data => {
+			res.status(200).json(data);
+		})
+		.catch(error => {
+			res
+				.status(500)
+				.json({ message: `Unable to retrieve post with id ${id}` });
+		});
+});
+
 // Project Middleware
 async function validateProjectId(req, res, next) {
 	const id = req.params.id;
 
-	const project = await Project.getById(id);
+	const project = await Project.get(id);
 
 	if (project) {
 		next();

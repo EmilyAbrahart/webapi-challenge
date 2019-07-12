@@ -25,14 +25,20 @@ In this challenge, create a web API around the following resources: `Projects` a
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [ ] Mention two parts of Express that you learned about this week.
+Express Router allows us to segment our applications into sub-applications.
+Middleware allowing us to intercept requests and perform additional actions before they reach the api.
 
 - [ ] Describe Middleware?
+Middleware intercepts requests and allows us to perform additional actions/validation on requests before they request from the API. This allows us to reduce unnecessary API calls and improve performance, as well as providing us an opportunity to add any extra data that the API may need but may not be accessible to the user.
 
 - [ ] Describe a Resource?
+A resouce is a set of items that we can access and perform actions on via the API. Examples of resources from this weeks project would be Projects and Actions.
 
 - [ ] What can the API return to help clients know if a request was successful?
+The API can return a status with a code indication the status of the request, as well as a message. Extra data can also be added to the request by the API if the request was successful.
 
 - [ ] How can we partition our application into sub-applications?
+Using express router we can partition the application into sections, making the code more concise, easier to read and easier to find by both the developer and other developers who may need to work on the project. We can then define paths in our server file, indicating which sub-application should be used depending on the URL of the request.
 
 ## Project Setup
 

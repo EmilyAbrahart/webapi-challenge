@@ -18,7 +18,6 @@ function logger(req, res, next) {
 		method: req.method,
     url: req.url,
     body: req.body || '',
-    id: req.params.id || '',
 		timestamp: new Date()
 	};
 	console.log(loggedData);

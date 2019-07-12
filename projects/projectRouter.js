@@ -41,6 +41,20 @@ router.get('/:id', validateProjectId, async (req, res) => {
 		});
 });
 
+router.get('/:id/actions', validateProjectId, async (req, res) => {
+	const id = req.params.id;
+
+	Project.getProjectActions(id)
+		.then(data => {
+			res.status(200).json(data);
+		})
+		.catch(error => {
+			res
+				.status(500)
+				.json({ message: `Unable to retrieve actions for project ${id}` });
+		});
+});
+
 router.delete('/:id', validateProjectId, async (req, res) => {
 	const id = req.params.id;
 

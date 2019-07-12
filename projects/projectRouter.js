@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 		});
 });
 
-router.get('/:id', validateProjectId, (req, res) => {
+router.get('/:id', validateProjectId, async (req, res) => {
 	const id = req.params.id;
 
 	Project.get(id)
@@ -36,7 +36,23 @@ router.get('/:id', validateProjectId, (req, res) => {
 		.catch(error => {
 			res
 				.status(500)
-				.json({ message: `Unable to retrieve post with id ${id}` });
+				.json({ message: `Unable to retrieve project with id ${id}` });
+		});
+});
+
+router.delete('/:id', validateProjectId, async (req, res) => {
+	const id = req.params.id;
+
+	Project.remove(id)
+		.then(data => {
+			res
+				.status(200)
+				.json({
+					message: `Project ${id} has been deleted successfully!`
+				});
+		})
+		.catch(error => {
+			res.status(500).json({ message: `Unable to delete project ${id}` });
 		});
 });
 

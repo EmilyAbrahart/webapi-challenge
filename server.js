@@ -4,6 +4,7 @@ const actionRouter = require('./actions/actionRouter');
 
 const server = express();
 server.use(express.json());
+server.use('/api/projects', projectRouter);
 
 
 server.get('/', (req, res) => {

@@ -1,7 +1,20 @@
 const router = require('express').Router();
 const Project = require('../data/helpers/projectModel');
 
-
+router.post('/', validateProject, (req, res) => {
+	const { name, description } = req.body;
+	Project.insert({ name, description })
+		.then(data => {
+			Project.get(data.id).then(data => {
+				res.status(201).json(data);
+			});
+		})
+		.catch(error => {
+			res
+				.status(500)
+				.json({ message: 'Unable to add project to the database.' });
+		});
+});
 
 // Project Middleware
 async function validateProjectId(req, res, next) {
@@ -20,11 +33,9 @@ function validateProject(req, res, next) {
 	if (Object.keys(req.body) == 0) {
 		res.status(400).json({ message: 'Missing project data' });
 	} else if (!req.body.name || !req.body.description) {
-		res
-			.status(400)
-			.json({
-				message: 'Please provide a name and description for your project.'
-			});
+		res.status(400).json({
+			message: 'Please provide a name and description for your project.'
+		});
 	} else {
 		next();
 	}
@@ -34,11 +45,9 @@ function validateAction(req, res, next) {
 	if (Object.keys(req.body) == 0) {
 		res.status(400).json({ message: 'Missing action data' });
 	} else if (!req.body.description || !req.body.notes) {
-		res
-			.status(400)
-			.json({
-				message: 'Please provide a description and note for your action.'
-			});
+		res.status(400).json({
+			message: 'Please provide a description and note for your action.'
+		});
 	} else {
 		next();
 	}

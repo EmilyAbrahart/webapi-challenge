@@ -3,6 +3,7 @@ const Project = require('../data/helpers/projectModel');
 
 router.post('/', validateProject, (req, res) => {
 	const { name, description } = req.body;
+
 	Project.insert({ name, description })
 		.then(data => {
 			Project.get(data.id).then(data => {
@@ -45,14 +46,27 @@ router.delete('/:id', validateProjectId, async (req, res) => {
 
 	Project.remove(id)
 		.then(data => {
-			res
-				.status(200)
-				.json({
-					message: `Project ${id} has been deleted successfully!`
-				});
+			res.status(200).json({
+				message: `Project ${id} has been deleted successfully!`
+			});
 		})
 		.catch(error => {
 			res.status(500).json({ message: `Unable to delete project ${id}` });
+		});
+});
+
+router.put('/:id', validateProjectId, validateProject, async (req, res) => {
+	const id = req.params.id;
+	const { name, description } = req.body;
+
+	Project.update(id, { name, description })
+		.then(data => {
+			Project.get(id).then(data => {
+				res.status(200).json(data);
+			});
+		})
+		.catch(error => {
+			res.status(500).json({ message: `Unable to update project ${id}` });
 		});
 });
 

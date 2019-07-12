@@ -16,6 +16,16 @@ router.post('/', validateProject, (req, res) => {
 		});
 });
 
+router.get('/', (req, res) => {
+	Project.get()
+		.then(data => {
+			res.status(200).json(data);
+		})
+		.catch(error => {
+			res.status(500).json({ message: 'Unable to retrieve projects.' });
+		});
+});
+
 // Project Middleware
 async function validateProjectId(req, res, next) {
 	const id = req.params.id;
